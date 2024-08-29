@@ -1,9 +1,11 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Modal from "react-modal";
 import styles from "./ImageModal.module.css";
 
+Modal.setAppElement("#root");
+
 const ImageModal = ({ isOpen, onRequestClose, image }) => {
-  const { urls, alt_description } = image;
+  const { urls, alt_description, user, likes } = image;
 
   return (
     <Modal
@@ -12,15 +14,20 @@ const ImageModal = ({ isOpen, onRequestClose, image }) => {
       className={styles.modal}
       overlayClassName={styles.overlay}
     >
-      <img src={urls.regular} alt={alt_description} className={styles.image} />
+      <div className={styles.content}>
+        <img
+          src={urls.regular}
+          alt={alt_description}
+          className={styles.image}
+        />
+        <p>Author: {user.name}</p>
+        <p>Likes: {likes}</p>
+        <button onClick={onRequestClose} className={styles.closeButton}>
+          Close
+        </button>
+      </div>
     </Modal>
   );
-};
-
-ImageModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func.isRequired,
-  image: PropTypes.object.isRequired,
 };
 
 export default ImageModal;

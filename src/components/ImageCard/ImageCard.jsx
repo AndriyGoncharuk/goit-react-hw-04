@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import styles from "./ImageCard.module.css";
 
 const ImageCard = ({ image }) => {
@@ -9,10 +9,6 @@ const ImageCard = ({ image }) => {
       <img src={urls.small} alt={alt_description} className={styles.image} />
     </div>
   );
-};
-
-ImageCard.propTypes = {
-  image: PropTypes.object.isRequired,
 };
 
 export default ImageCard;

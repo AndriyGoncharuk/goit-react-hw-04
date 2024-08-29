@@ -24,6 +24,7 @@ const App = () => {
 
     const fetchImages = async () => {
       setLoading(true);
+      setError(null);
 
       try {
         const response = await axios.get(
@@ -32,8 +33,7 @@ const App = () => {
             params: {
               query,
               page,
-              orientation: "landscape",
-              per_page: 15,
+              per_page: 12,
               client_id: API_KEY,
             },
           }
