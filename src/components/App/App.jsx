@@ -15,16 +15,17 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [totalPages, setTotalPages] = useState(999);
 
   useEffect(() => {
     if (!query) return;
 
     const fetchImages = async () => {
       setLoading(true);
-      setError(null);
+      setError(false);
 
       try {
         const response = await axios.get(
@@ -33,12 +34,13 @@ const App = () => {
             params: {
               query,
               page,
-              per_page: 12,
+              per_page: 15,
               client_id: API_KEY,
             },
           }
         );
         setImages((prevImages) => [...prevImages, ...response.data.results]);
+        console.log(response.totalPages);
       } catch (error) {
         setError("Failed to load images. Please try again later.");
       } finally {
@@ -75,6 +77,7 @@ const App = () => {
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} openModal={openModal} />
       {loading && <Loader />}
+      {page >= totalPages && <b>END OF COLLECTION!!!!</b>}
       {images.length > 0 && !loading && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
